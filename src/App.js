@@ -40,10 +40,10 @@ function App() {
         <input type="number" min='1' onKeyDown={start} placeholder="Set minutes count" />
       </div>
       <div className="value">
-        <span className="minutes">{minutes < 10 ? `0${minutes}` : minutes}:</span>
-        <span className="seconds">{seconds < 10 ? `0${seconds}` : seconds}</span>
+        <span className="minutes">{minutes < 10 ? `0${minutes}`:minutes}:</span>
+        <span className="seconds">{seconds < 10 ? `0${seconds}`:seconds}</span>
       </div>
-      <div className="fivesec">{seconds === 5 && minutes === 0 ? '5 seconds left': ''}</div>
+      <div className="fivesec">{seconds === 5 && minutes === 0 ? '5 seconds left':''}</div>
     </div>
   );
 }
