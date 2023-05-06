@@ -1,23 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import './app.css';
 
 function App() {
+
+  const [minutes, setMinutes] = useState(0)
+  const [seconds, setSeconds] = useState(0)
+  const [flag, setFlag] = useState(false);
+
+
+  const start = (e) => {
+    if(e.key === 'Enter'){
+      setMinutes(parseInt(e.target.value));
+      setSeconds(0)
+      setFlag(true);
+    }
+  }
+
+  useEffect(()=>{
+    if(flag){
+      const interval = setInterval(()=>{
+        if(parseInt(seconds)===0 && parseInt(minutes)!==0){
+          setSeconds(seconds => seconds + 59)
+          setMinutes(minutes => minutes - 1)
+        }else if(parseInt(seconds)===0 && parseInt(minutes)===0){
+        }else{
+          setSeconds(seconds => seconds - 1)
+        }
+      }, 1000)
+      return () => {
+        clearInterval(interval)
+      }
+    }
+  },[seconds, minutes, flag])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="timer">
+      <h1>CountDown Timer</h1>
+      <div className="input-field">
+        <input type="number" min='1' onKeyDown={start} placeholder="Set minutes count" />
+      </div>
+      <div className="value">
+        <span className="minutes">{minutes < 10 ? `0${minutes}` : minutes}:</span>
+        <span className="seconds">{seconds < 10 ? `0${seconds}` : seconds}</span>
+      </div>
+      <div className="fivesec">{seconds === 5 && minutes === 0 ? '5 seconds left': ''}</div>
     </div>
   );
 }
